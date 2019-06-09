@@ -331,11 +331,6 @@ void process_lcd_s_command(const char* command) {
       write_to_lcd(message_buffer);
     } break;
 
-    case 'H':
-      // Home all axis
-      enqueue_and_echo_command("G28");
-      break;
-
     case 'L': {
       #if ENABLED(SDSUPPORT)
         if (!card.isDetected()) card.initsd();
