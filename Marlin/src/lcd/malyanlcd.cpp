@@ -451,6 +451,24 @@ void MarlinUI::update() {
     }
   }
 
+   // Detect USB Print jobs
+   // Probably a better way myabe is_usb_priting query
+   // Only apply for the first few seconds of detection otherwise you keep resetting screen to build
+   // Also don't send each time update is called -too frequent
+  static uint16_t last_elseconds = 0;
+  duration_t elapsed2;
+  elapsed2 = print_job_timer.duration();
+  uint16_t elseconds = elapsed2.second();
+  if (elseconds > 0 && elseconds <10 && Serial)
+  {
+    if (elseconds != last_elseconds)
+    {
+      // Switch to build screen
+      write_to_lcd_P(PSTR("{SYS:BUILD}"));
+      last_elseconds=elseconds;
+    }
+  }
+
   #if ENABLED(WIFI_PRINTING)
   // TODO - don't do this a byte at a time.
   while (PASSTHROUGHSERIAL.available()) {
