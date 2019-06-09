@@ -124,7 +124,7 @@ void write_to_lcd(const char * const message) {
  */
 void process_lcd_c_command(const char* command) {
   switch (command[0]) {
-    case 'C': {
+    case 'S': {
       int raw_feedrate = atoi(command + 1);
       feedrate_percentage = raw_feedrate * 10;
       feedrate_percentage = constrain(feedrate_percentage, 10, 999);
